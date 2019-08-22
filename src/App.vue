@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div class="main-container">
-      <div class="task-container"></div>
+      <div class="task-container">
+        <task-input @submit-new-task="handleSubmitNewTask($event)" />
+        <TaskList :list-name="'Done'" :tasks="tasks.done" />
+        <TaskList :list-name="'Next'" :tasks="tasks.next"  />
+      </div>
       <div class="timer-container">
         <mode-button @change-mode="changeMode($event)" />
         <Time  
@@ -17,12 +21,16 @@
 <script>
 import ModeButton from "./components/ModeButton.vue";
 import Time from "./components/Time.vue";
+import TaskList from "./components/TaskList.vue";
+import TaskInput from "./components/TaskInput.vue";
 
 export default {
   name: 'app',
   components: {
     ModeButton,
     Time,
+    TaskList,
+    TaskInput
   },
   data: function() {
     return {
@@ -31,7 +39,11 @@ export default {
         sec: 0
       },
       currMode: 'work',
-      countingDown: false
+      countingDown: false,
+      tasks: {
+        done: [],
+        next: []
+      }
     }
   },
   methods: {
@@ -80,15 +92,18 @@ export default {
           this.restTime.min = 15;
           break;        
       }
+    },
+    handleSubmitNewTask: function (newTask) {
+      this.tasks.next = [...this.tasks.next, newTask];
     }
   }
 }
 </script>
-
 <style>
 html, body{
-  background-color: #eee;
+  margin: 0;
   height: 100%;
+  background-color: #f2f2f2;
 }
 #app{
   height: 100%;
@@ -100,7 +115,7 @@ html, body{
   height: 100%;
 }
 .task-container{
-  background-color: #b9e6d3;
+  background-color: #7ed3b2;
 }
 .timer-container{
   display: grid;
