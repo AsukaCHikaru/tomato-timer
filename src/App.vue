@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <div class="main-container">
-      <mode-button @change-mode="changeMode($event)" />
-      <Time  
-        :rest-time="restTime" 
-        @send-control="handleControl($event)" 
-        :counting-down="countingDown"
-      />
+      <div class="task-container"></div>
+      <div class="timer-container">
+        <mode-button @change-mode="changeMode($event)" />
+        <Time  
+          :rest-time="restTime" 
+          @send-control="handleControl($event)" 
+          :counting-down="countingDown"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -85,16 +88,22 @@ export default {
 <style>
 html, body{
   background-color: #eee;
+  height: 100%;
 }
 #app{
-  display: grid;
-  grid-template-rows: auto 50% auto;
+  height: 100%;
 }
 .main-container{
-  grid-row-start: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 50% 50%;
   margin: auto;
+  height: 100%;
+}
+.task-container{
+  background-color: #b9e6d3;
+}
+.timer-container{
+  display: grid;
+  grid-template-rows: 25% 75%;
 }
 </style>

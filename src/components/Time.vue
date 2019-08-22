@@ -38,8 +38,8 @@ export default {
   grid-template-rows: repeat(3, auto);
   padding: 0;
   margin: 0 auto;
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   background-color: #b9e6d3;
 }
