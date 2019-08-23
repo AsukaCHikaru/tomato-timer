@@ -1,7 +1,7 @@
 <template>
   <div class="task-input-container">
-    <input type="text" v-model="inputData" />
-    <input type="submit" @click="submitNewTask">
+    <input type="text" v-model="inputData" @keyup.enter="handleCliclSubmit" />
+    <input type="submit" @click="handleCliclSubmit">
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     }
   },
   methods: {
-    submitNewTask: function () {
+    handleCliclSubmit: function () {
       this.$emit('submit-new-task', this.inputData);
       this.inputData = "";
     }

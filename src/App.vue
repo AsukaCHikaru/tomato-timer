@@ -2,9 +2,15 @@
   <div id="app">
     <div class="main-container">
       <div class="task-container">
-        <task-input @submit-new-task="handleSubmitNewTask($event)" />
+        <task-input 
+          @submit-new-task="submitNewTask($event)"           
+        />
         <TaskList :list-name="'Done'" :tasks="tasks.done" />
-        <TaskList :list-name="'Next'" :tasks="tasks.next"  />
+        <TaskList 
+          :list-name="'Next'" 
+          :tasks="tasks.next" 
+          @click-finish-task="finishTask($event)"
+        />
       </div>
       <div class="timer-container">
         <mode-button @change-mode="changeMode($event)" />
@@ -93,8 +99,20 @@ export default {
           break;        
       }
     },
-    handleSubmitNewTask: function (newTask) {
+    submitNewTask: function (task) {
+      const newTask = {
+        content: task,
+        id: (new Date).getTime()
+      }
       this.tasks.next = [...this.tasks.next, newTask];
+    },
+    finishTask: function (taskId) {
+      const taskToFinish = this.tasks.next.find(task => {
+        return task.id === taskId
+      });
+      const index = this.tasks.next.indexOf(taskToFinish);
+      this.tasks.next.splice(index, 1);
+      this.tasks.done.push(taskToFinish);
     }
   }
 }
