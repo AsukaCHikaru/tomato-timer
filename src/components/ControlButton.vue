@@ -1,6 +1,8 @@
 <template>
   <div class="control-button-container">
-    <button class="control-button" @click="handleClickControl">{{buttonDisplay}}</button>
+    <button class="control-button" @click="handleClickControl">
+      <font-awesome-icon :icon="buttonIcon" />
+    </button>
   </div>
 </template>
 
@@ -17,8 +19,8 @@ export default {
     }
   },
   computed: {
-    buttonDisplay: function () {
-      return this.countingDown ? 'PAUSE' : 'START';
+    buttonIcon: function () {
+      return this.countingDown ? 'pause' : 'play';
     }
   }
 }
@@ -30,12 +32,13 @@ export default {
   margin: 0 auto;
 }
 .control-button{  
-  margin: 0 auto;
+  margin: 25px auto;
   padding: 0 auto;
-  font-size: 1.5em;
+  font-size: 3em;
   width: 100px;  
   background-color: transparent;
   border: none;
+  color: #f2f2f2;
 }
 .control-button:focus{
   outline: none;

@@ -35,7 +35,7 @@ export default {
 <style>
 .time-container{
   display: grid;
-  grid-template-rows: repeat(3, auto);
+  grid-template-rows: repeat(3, calc(100%/3));
   padding: 0;
   margin: 0 auto;
   width: 500px;
@@ -46,7 +46,8 @@ export default {
 .time{
   grid-row-start: 2;
   margin: auto;
-  font-size: 5em;
+  font-size: 6em;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #f2f2f2;
 }
 </style>

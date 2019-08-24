@@ -13,7 +13,7 @@
         />
       </div>
       <div class="timer-container">
-        <mode-button @change-mode="changeMode($event)" />
+        <this-task-display :task="taskForDisplay" />
         <Time  
           :rest-time="restTime" 
           @send-control="handleControl($event)" 
@@ -29,6 +29,7 @@ import ModeButton from "./components/ModeButton.vue";
 import Time from "./components/Time.vue";
 import TaskList from "./components/TaskList.vue";
 import TaskInput from "./components/TaskInput.vue";
+import ThisTaskDisplay from "./components/ThisTaskDisplay.vue";
 
 export default {
   name: 'app',
@@ -36,7 +37,8 @@ export default {
     ModeButton,
     Time,
     TaskList,
-    TaskInput
+    TaskInput,
+    ThisTaskDisplay
   },
   data: function() {
     return {
@@ -49,7 +51,13 @@ export default {
       tasks: {
         done: [],
         next: []
-      }
+      },
+      taskNumber: 1
+    }
+  },
+  computed: {
+    taskForDisplay: function () {
+      return this.tasks.next.length === 0 ? {} : this.tasks.next[0];
     }
   },
   methods: {
@@ -101,15 +109,19 @@ export default {
     },
     submitNewTask: function (task) {
       const newTask = {
+        number: this.taskNumber,
         content: task,
-        id: (new Date).getTime()
+        id: (new Date).getTime(),
+        done: false        
       }
+      this.taskNumber++;
       this.tasks.next = [...this.tasks.next, newTask];
     },
     finishTask: function (taskId) {
       const taskToFinish = this.tasks.next.find(task => {
         return task.id === taskId
       });
+      taskToFinish.done = true;
       const index = this.tasks.next.indexOf(taskToFinish);
       this.tasks.next.splice(index, 1);
       this.tasks.done.push(taskToFinish);
