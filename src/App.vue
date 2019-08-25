@@ -5,11 +5,20 @@
         <task-input 
           @submit-new-task="submitNewTask($event)"           
         />
-        <TaskList :list-name="'Done'" :tasks="tasks.done" />
+        <TaskList 
+          :list-name="'Done'" 
+          :tasks="tasks.done" 
+          @click-delete-task="deleteTask($event)"
+        />
         <TaskList 
           :list-name="'Next'" 
           :tasks="tasks.next" 
           @click-finish-task="finishTask($event)"
+          @click-delete-task="deleteTask($event)"
+        />
+        <TaskList 
+          :list-name="'Delete'" 
+          :tasks="tasks.delete" 
         />
       </div>
       <div class="timer-container">
@@ -50,7 +59,8 @@ export default {
       countingDown: false,
       tasks: {
         done: [],
-        next: []
+        next: [],
+        delete: []
       },
       taskNumber: 1
     }
@@ -125,6 +135,14 @@ export default {
       const index = this.tasks.next.indexOf(taskToFinish);
       this.tasks.next.splice(index, 1);
       this.tasks.done.push(taskToFinish);
+    },
+    deleteTask: function ([taskId, listName]) {
+      const taskToDelete = this.tasks[listName].find(task => {
+        return task.id === taskId
+      });
+      const index = this.tasks[listName].indexOf(taskToDelete);
+      this.tasks[listName].splice(index, 1);
+      this.tasks.delete.push(taskToDelete);
     }
   }
 }

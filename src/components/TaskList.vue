@@ -7,6 +7,8 @@
         :key="'task-item-'+index"
         :task="task"
         @click-finish-task="handleClickFinishTask"
+        @click-delete-task="handleClickDeleteTask"
+        :hasDelBtn="hasDelBtn"
       />
     </ul>
   </div>
@@ -24,9 +26,17 @@ export default {
     listName: String,
     tasks: Array
   },
+  computed: {
+    hasDelBtn: function () {
+      return this.listName!=='Delete'
+    }
+  },
   methods: {
     handleClickFinishTask: function (taskId) {
       this.$emit('click-finish-task', taskId);
+    },
+    handleClickDeleteTask: function (taskId) {
+      this.$emit('click-delete-task', [taskId, this.listName.toLowerCase()]);
     }
   }
 }
