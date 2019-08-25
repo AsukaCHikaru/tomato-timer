@@ -37,7 +37,7 @@ export default {
     },
     handleClickDeleteTask: function (taskId) {
       this.$emit('click-delete-task', [taskId, this.listName.toLowerCase()]);
-    }
+    }    
   }
 }
 </script>

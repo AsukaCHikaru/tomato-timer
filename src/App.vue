@@ -24,9 +24,10 @@
       <div class="timer-container">
         <this-task-display :task="taskForDisplay" />
         <Time  
-          :rest-time="restTime" 
+          :rest-time-sec="restTimeSec" 
           @send-control="handleControl($event)" 
           :counting-down="countingDown"
+          :past-time-per="pastTimePer"
         />
       </div>
     </div>
@@ -51,10 +52,7 @@ export default {
   },
   data: function() {
     return {
-      restTime: {
-        min: 25,
-        sec: 0
-      },
+      restTimeSec: 1500,
       currMode: 'work',
       countingDown: false,
       tasks: {
@@ -68,6 +66,11 @@ export default {
   computed: {
     taskForDisplay: function () {
       return this.tasks.next.length === 0 ? {} : this.tasks.next[0];
+    },
+    pastTimePer: function () {
+      const fullTimeSec = 1500;
+      const pastTimePer = 100 - Math.floor(this.restTimeSec/fullTimeSec * 100);
+      return pastTimePer;
     }
   },
   methods: {
@@ -81,17 +84,8 @@ export default {
       }
     },
     countDown: function () {
-      if(this.restTime.sec===0){
-        if(this.restTime.min===0) {
-          this.stopCountDown();
-        }
-        else{
-          this.restTime.min--;
-          this.restTime.sec = 59;
-        }
-      }else{
-        this.restTime.sec--;
-      }  
+      if(this.restTimeSec===0) this.stopCountDown();
+      else this.restTimeSec--;
     },
     startCountDown: function () {
       this.countDownInt = setInterval(this.countDown, 1000);
@@ -107,13 +101,13 @@ export default {
       this.restTime.sec = 0;
       switch (this.currMode) {
         case 'work':
-          this.restTime.min = 25;
+          this.restTimeSec = 1500;
           break;
         case 'break':
-          this.restTime.min = 5;
+          this.restTimeSec = 300;
           break;
         case 'longbreak':
-          this.restTime.min = 15;
+          this.restTimeSec = 900;
           break;        
       }
     },

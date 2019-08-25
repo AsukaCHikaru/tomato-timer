@@ -1,6 +1,9 @@
 <template>
-  <div class="time-container">
-    <h1 class="time">{{`${restTime.min} : ${addZeroWhenSec1Digit}`}}</h1>
+  <div 
+    class="time-container"
+    :style="{'background-color': timeBackgroundColor}"
+  >
+    <h1 class="time">{{`${timeMinDisplay} : ${addZeroWhenSec1Digit}`}}</h1>
     <control-button 
       @click-control="sendControl($event)" 
       :counting-down="countingDown"
@@ -16,12 +19,30 @@ export default {
     ControlButton
   },
   props: {
-    restTime: Object,
-    countingDown: Boolean
+    restTimeSec: Number,
+    countingDown: Boolean,
+    pastTimePer: Number
   },
   computed: {
     addZeroWhenSec1Digit: function(){
-      return this.restTime.sec<10 ? `0${this.restTime.sec}` : this.restTime.sec;
+      return (this.restTimeSec % 60) <10 ? `0${this.restTimeSec%60}` : this.restTimeSec%60;
+    },
+    timeMinDisplay: function () {
+      return Math.floor(this.restTimeSec / 60);
+    },
+    timeBackgroundColor: function () {
+      const startHex = [185, 230, 211];
+      const endHex = [239, 108, 87];
+      const currProgress = [
+        Math.floor((endHex[0]-startHex[0])/100 * this.pastTimePer),
+        Math.floor((endHex[1]-startHex[1])/100 * this.pastTimePer),
+        Math.floor((endHex[2]-startHex[2])/100 * this.pastTimePer)
+      ];
+      const currColor = 
+        Number(startHex[0] + currProgress[0]).toString(16) +
+        Number(startHex[1] + currProgress[1]).toString(16) +
+        Number(startHex[2] + currProgress[2]).toString(16)      
+      return '#'+currColor;
     }
   },
   methods: {
