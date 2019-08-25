@@ -162,5 +162,6 @@ html, body{
 .timer-container{
   display: grid;
   grid-template-rows: 25% 75%;
+  box-shadow: 5px 0 8px 5px #000;
 }
 </style>

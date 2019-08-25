@@ -39,6 +39,7 @@ export default {
   background-color: transparent;
   border: none;
   color: #f2f2f2;
+  cursor: pointer;
 }
 .control-button:focus{
   outline: none;

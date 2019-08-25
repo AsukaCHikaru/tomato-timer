@@ -39,4 +39,10 @@ div.task-input-container{
 .task-input-container > input[type="text"]{
   border-bottom: solid 2px #f2f2f2;
 }
+.task-input-container > input[type="submit"]{
+  cursor: pointer;
+}
+.task-input-container > input[type="submit"]:hover{
+  color: #fff;
+}
 </style>

@@ -59,7 +59,7 @@ ul.task-list-ul{
 }
 li.task-list-li{
   display: grid;
-  grid-template-columns: 20% auto 20%;
+  grid-template-columns: 15% auto 15%;
 }
 h6.task-list-li-txt{
   display: inline;  
