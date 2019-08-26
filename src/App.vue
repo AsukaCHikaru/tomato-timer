@@ -88,7 +88,7 @@ export default {
       else this.restTimeSec--;
     },
     startCountDown: function () {
-      this.countDownInt = setInterval(this.countDown, 10);
+      this.countDownInt = setInterval(this.countDown, 1000);
       this.countingDown = true;
     },
     stopCountDown: function () {
