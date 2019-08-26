@@ -14,6 +14,9 @@
 <script>
 import ControlButton from "./ControlButton.vue";
 import { Gradient } from "../logic/calcGradient";
+const colors = ['b9e6d3', '7ed3b2', 'efbf57', 'ef6c57'];
+const g = new Gradient(colors);
+
 export default {
   name: 'Time',
   components: {
@@ -32,8 +35,6 @@ export default {
       return Math.floor(this.restTimeSec / 60);
     },
     timeBackgroundColor: function () {
-      const colors = ['b9e6d3', '7ed3b2', 'efbf57', 'ef6c57'];
-      const g = new Gradient(colors);
       return g.getColor(this.pastTimePer);
     }
   },

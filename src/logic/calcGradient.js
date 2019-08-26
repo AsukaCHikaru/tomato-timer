@@ -1,7 +1,7 @@
 export const Gradient = function(colorArr) {
   if (colorArr.length === 0) throw "Number of color is zero";
-  this.colorsHex = [...colorArr];
-  this.phase = colorArr.length;
+  this.phase = colorArr.length - 1;
+  this.ticksPerPhase = 100 / this.phase;
   this.colorsDec = colorArr.map(colorHex => {
     return [
       parseInt(colorHex.substr(0, 2), 16),
@@ -11,32 +11,32 @@ export const Gradient = function(colorArr) {
   });
   this.tick = this.colorsDec
     .map((colorDec, i) => {
-      if (i !== this.phase - 1) {
+      if (i !== this.phase) {
         const nextColorDec = this.colorsDec[i + 1];
         return [
-          (nextColorDec[0] - colorDec[0]) / (100 / this.phase),
-          (nextColorDec[1] - colorDec[1]) / (100 / this.phase),
-          (nextColorDec[2] - colorDec[2]) / (100 / this.phase)
+          (nextColorDec[0] - colorDec[0]) / this.ticksPerPhase,
+          (nextColorDec[1] - colorDec[1]) / this.ticksPerPhase,
+          (nextColorDec[2] - colorDec[2]) / this.ticksPerPhase
         ];
       } else return null;
     })
-    .slice(0, this.phase - 1);
+    .slice(0, this.phase);
 
   this.getColor = progress => {
-    if (progress === 0) return "#" + this.colorsHex[0];
-    const currPhase = Math.ceil(progress / (100 / this.phase));
+    if (progress === 0) return "#" + colorArr[0];
+    const currPhase = Math.ceil(progress / this.ticksPerPhase);
     const currColorDec = [
       Math.floor(
         this.colorsDec[currPhase - 1][0] +
-          this.tick[currPhase - 1][0] * progress
+          this.tick[currPhase - 1][0] * (progress % this.ticksPerPhase)
       ),
       Math.floor(
         this.colorsDec[currPhase - 1][1] +
-          this.tick[currPhase - 1][1] * progress
+          this.tick[currPhase - 1][1] * (progress % this.ticksPerPhase)
       ),
       Math.floor(
         this.colorsDec[currPhase - 1][2] +
-          this.tick[currPhase - 1][2] * progress
+          this.tick[currPhase - 1][2] * (progress % this.ticksPerPhase)
       )
     ];
     const currColorHex =
