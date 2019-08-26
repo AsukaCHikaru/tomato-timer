@@ -13,6 +13,7 @@
 
 <script>
 import ControlButton from "./ControlButton.vue";
+import { Gradient } from "../logic/calcGradient";
 export default {
   name: 'Time',
   components: {
@@ -31,18 +32,9 @@ export default {
       return Math.floor(this.restTimeSec / 60);
     },
     timeBackgroundColor: function () {
-      const startHex = [185, 230, 211];
-      const endHex = [239, 108, 87];
-      const currProgress = [
-        Math.floor((endHex[0]-startHex[0])/100 * this.pastTimePer),
-        Math.floor((endHex[1]-startHex[1])/100 * this.pastTimePer),
-        Math.floor((endHex[2]-startHex[2])/100 * this.pastTimePer)
-      ];
-      const currColor = 
-        Number(startHex[0] + currProgress[0]).toString(16) +
-        Number(startHex[1] + currProgress[1]).toString(16) +
-        Number(startHex[2] + currProgress[2]).toString(16)      
-      return '#'+currColor;
+      const colors = ['b9e6d3', '7ed3b2', 'efbf57', 'ef6c57'];
+      const g = new Gradient(colors);
+      return g.getColor(this.pastTimePer);
     }
   },
   methods: {
